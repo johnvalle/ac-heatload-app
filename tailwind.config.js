@@ -1,15 +1,28 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Commissioner", ...defaultTheme.fontFamily.sans],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        "custom-blue-light": "#D8EAFF",
+        "custom-blue-dark": "#2B3867",
+        "custom-green-dark": "#15462B",
+        "custom-green-light": "#D8FFE6",
+        "custom-yellow-light": "#F9F09F",
+        "custom-gray-bg": "#F6F6F6",
+        "custom-gray-stroke": "#D9D9D9",
+        "custom-black": "#292929",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
