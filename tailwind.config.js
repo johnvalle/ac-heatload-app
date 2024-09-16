@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 export default {
   darkMode: ["class"],
@@ -15,14 +15,19 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        "custom-blue-light": "#D8EAFF",
-        "custom-blue-dark": "#2B3867",
-        "custom-green-dark": "#15462B",
-        "custom-green-light": "#D8FFE6",
-        "custom-yellow-light": "#F9F09F",
-        "custom-gray-bg": "#F6F6F6",
-        "custom-gray-stroke": "#D9D9D9",
-        "custom-black": "#292929",
+        custom: {
+          "blue-light": "#D8EAFF",
+          "blue-dark": "#2B3867",
+          "green-dark": "#15462B",
+          "green-light": "#D8FFE6",
+          "yellow-light": "#F9F09F",
+          "gray-bg": "#F6F6F6",
+          "gray-stroke": "#EEEEEE",
+          black: "#292929",
+          "purple-dark": "#361546",
+          "purple-light": "#ECD8FF",
+        },
+
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -67,4 +72,4 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate")],
-};
+}
