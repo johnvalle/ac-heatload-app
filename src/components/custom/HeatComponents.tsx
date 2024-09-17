@@ -1,17 +1,23 @@
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type HeatComponent = "LED TV" | "Working Kitchen" | "Refrigerator" | "Computer"
-const heatComponents = ["LED TV", "Working Kitchen", "Refrigerator", "Computer"]
+const heatComponents: HeatComponent[] = [
+  "LED TV",
+  "Working Kitchen",
+  "Refrigerator",
+  "Computer",
+]
 
 type Props = {
   defaultValue?: HeatComponent[]
+  onChange?: (value: HeatComponent[]) => void
 }
 
-export const HeatComponentsSelector = (props: Props) => {
-  const [selectedComponents, setSelectedComponents] = useState<
-    typeof heatComponents
-  >(props.defaultValue ?? [])
+export const HeatComponentsSelector = ({ onChange, defaultValue }: Props) => {
+  const [selectedComponents, setSelectedComponents] = useState<HeatComponent[]>(
+    defaultValue ?? []
+  )
 
   const colorList = [
     "font-custom-green-dark bg-custom-green-light",
@@ -20,9 +26,9 @@ export const HeatComponentsSelector = (props: Props) => {
     "font-custom-black bg-custom-yellow-light",
   ]
 
-  const isSelected = (name: string) => selectedComponents.includes(name)
+  const isSelected = (name: HeatComponent) => selectedComponents.includes(name)
 
-  const toggleComponent = (name: string) => {
+  const toggleComponent = (name: HeatComponent) => {
     if (isSelected(name)) {
       return setSelectedComponents((prevState) =>
         prevState.filter((item) => item !== name)
@@ -31,9 +37,15 @@ export const HeatComponentsSelector = (props: Props) => {
     return setSelectedComponents((prevState) => [...prevState, name])
   }
 
+  useEffect(() => {
+    if (onChange) {
+      onChange(selectedComponents)
+    }
+  }, [selectedComponents])
+
   return heatComponents.map((item, idx) => (
     <div
-      id={`${item}-${idx}`}
+      key={`${item}-${idx}`}
       onClick={() => toggleComponent(item)}
       className={cn(
         "p-4 rounded-lg cursor-pointer ease-in-out",

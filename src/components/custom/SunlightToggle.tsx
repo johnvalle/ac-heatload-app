@@ -1,11 +1,19 @@
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type Props = {
   defaultValue?: boolean
+  onChange?: (value: boolean) => void
 }
-export const SunlightToggle = ({ defaultValue = true }: Props) => {
+export const SunlightToggle = ({ onChange, defaultValue = true }: Props) => {
   const [isSelected, setIsSelected] = useState(defaultValue)
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(isSelected)
+    }
+  }, [isSelected])
+
   return (
     <div
       className="w-[285px] h-[50px] flex bg-custom-gray-bg rounded-lg relative cursor-pointer"

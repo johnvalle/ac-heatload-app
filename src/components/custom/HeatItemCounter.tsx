@@ -9,6 +9,7 @@ type Props = {
   max: number
   min: number
   alt: string
+  onChange?: (value: number) => void
 }
 export const HeatItemCounter = ({
   min,
@@ -16,6 +17,7 @@ export const HeatItemCounter = ({
   name,
   icon,
   alt,
+  onChange,
   defaultValue = 0,
 }: Props) => {
   const [counter, setCounter] = useState(defaultValue)
@@ -35,6 +37,9 @@ export const HeatItemCounter = ({
 
   useEffect(() => {
     setShowAnimation(true)
+    if (onChange) {
+      onChange(counter)
+    }
   }, [counter])
 
   return (
@@ -53,6 +58,7 @@ export const HeatItemCounter = ({
       <div className="h-[90px] flex flex-col justify-center items-center">
         <p className="pt-4">{name}</p>
         <button
+          type="button"
           className={cn(
             "-left-4",
             buttonStyle,
@@ -64,6 +70,7 @@ export const HeatItemCounter = ({
           <Minus className="stroke-custom-black" />
         </button>
         <button
+          type="button"
           className={cn(
             "-right-4",
             buttonStyle,

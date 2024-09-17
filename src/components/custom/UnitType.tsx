@@ -1,13 +1,17 @@
 import residentialSvg from "@assets/home.svg"
 import commercialSvg from "@assets/company.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
+import { UnitType } from "@/types/heatload"
 
-type UnitType = "residential" | "commercial"
 type Props = {
   defaultValue?: UnitType
+  onChange: (value: UnitType) => void
 }
-export const UnitTypeSelect = ({ defaultValue = "residential" }: Props) => {
+export const UnitTypeSelect = ({
+  onChange,
+  defaultValue = "residential",
+}: Props) => {
   const unitTypes = [
     {
       image: {
@@ -35,8 +39,15 @@ export const UnitTypeSelect = ({ defaultValue = "residential" }: Props) => {
 
   const [selected, setSelected] = useState(defaultValue)
 
+  useEffect(() => {
+    if (onChange) {
+      onChange(selected)
+    }
+  }, [selected])
+
   return unitTypes.map(({ image, value, color }) => (
     <div
+      key={value}
       className={cn(
         "flex items-center justify-between cursor-pointer h-[80px] w-[285px] rounded-lg p-4 relative hover:font-bold group/unitType-card hover:transition-all ease-in-out ",
         value === selected ? color.bg : "bg-custom-gray-bg"
