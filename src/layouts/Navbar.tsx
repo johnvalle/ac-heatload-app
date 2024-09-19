@@ -1,18 +1,21 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router"
 
 const Navbar = () => {
   return (
     <div>
-      <div className='p-2 flex gap-2 h-[72px] px-12 py-4 border-y border-y-custom-gray-stroke'>
-        <Link to='/' className='[&.active]:font-bold'>
+      <div className="p-2 flex gap-6 h-[72px] px-12 py-4 border-y border-y-custom-gray-stroke">
+        <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}
-        <Link to='/HPCalculator' className='[&.active]:font-bold'>
-          Calculator
+        <Link to="/HPCalculator" className="[&.active]:font-bold">
+          AC Calculator
+        </Link>
+        <Link to="/ACValidator" className="[&.active]:font-bold">
+          AC Validator
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

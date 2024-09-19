@@ -56,6 +56,7 @@ export const UnitTypeSelect = ({
     >
       <p
         className={cn(
+          "capitalize",
           value === selected ? color.text : "text-custom-black",
           value === selected && "font-bold"
         )}
