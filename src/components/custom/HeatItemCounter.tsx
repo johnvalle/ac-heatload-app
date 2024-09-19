@@ -30,6 +30,14 @@ export const HeatItemCounter = ({
   )
 
   useEffect(() => {
+    if (defaultValue > max || defaultValue < min) {
+      throw new Error(
+        "Default value must not be greater than max or less than min"
+      )
+    }
+  }, [defaultValue, min, max])
+
+  useEffect(() => {
     setTimeout(() => {
       setShowAnimation(false)
     }, 500)
@@ -65,6 +73,8 @@ export const HeatItemCounter = ({
             !isMin ? "hover:scale-[120%] cursor-pointer" : "scale-0"
           )}
           disabled={counter === min}
+          aria-label="decrease"
+          aria-hidden={isMin}
           onClick={() => setCounter((prevState) => (prevState -= 1))}
         >
           <Minus className="stroke-custom-black" />
@@ -77,6 +87,8 @@ export const HeatItemCounter = ({
             !isMax ? "hover:scale-[120%] cursor-pointer" : "scale-0"
           )}
           disabled={counter === max}
+          aria-label="increase"
+          aria-hidden={isMax}
           onClick={() => setCounter((prevState) => (prevState += 1))}
         >
           <Plus className="stroke-custom-black" />
