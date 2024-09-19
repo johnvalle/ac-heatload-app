@@ -44,9 +44,11 @@ export const HeatComponentsSelector = ({ onChange, defaultValue }: Props) => {
   }, [selectedComponents])
 
   return heatComponents.map((item, idx) => (
-    <div
+    <button
       key={`${item}-${idx}`}
+      type="button"
       onClick={() => toggleComponent(item)}
+      aria-pressed={isSelected(item)}
       className={cn(
         "p-4 rounded-lg cursor-pointer ease-in-out",
         isSelected(item)
@@ -55,6 +57,6 @@ export const HeatComponentsSelector = ({ onChange, defaultValue }: Props) => {
       )}
     >
       <p>{item}</p>
-    </div>
+    </button>
   ))
 }
