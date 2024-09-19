@@ -16,6 +16,7 @@ export const SunlightToggle = ({ onChange, defaultValue = true }: Props) => {
 
   return (
     <div
+      data-testid="sunlight-toggle-cmp"
       className="w-[285px] h-[50px] flex bg-custom-gray-bg rounded-lg relative cursor-pointer"
       onClick={() => setIsSelected((prevState) => !prevState)}
     >
