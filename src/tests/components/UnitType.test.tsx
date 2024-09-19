@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { expect, test } from "vitest"
 import userEvent from "@testing-library/user-event"
 
-import { UnitTypeSelect } from "@/components/custom/UnitType.tsx"
+import { UnitTypeSelect } from "@/components/custom/UnitType"
 
 test("should check UnitTypeSelect functionality", async () => {
   render(<UnitTypeSelect onChange={(value) => console.log(value)} />)
