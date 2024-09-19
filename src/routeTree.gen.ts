@@ -17,6 +17,7 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const HPCalculatorLazyImport = createFileRoute('/HPCalculator')()
+const ACValidatorLazyImport = createFileRoute('/ACValidator')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
@@ -25,6 +26,11 @@ const HPCalculatorLazyRoute = HPCalculatorLazyImport.update({
   path: '/HPCalculator',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/HPCalculator.lazy').then((d) => d.Route))
+
+const ACValidatorLazyRoute = ACValidatorLazyImport.update({
+  path: '/ACValidator',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/ACValidator.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -42,6 +48,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/ACValidator': {
+      id: '/ACValidator'
+      path: '/ACValidator'
+      fullPath: '/ACValidator'
+      preLoaderRoute: typeof ACValidatorLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/HPCalculator': {
       id: '/HPCalculator'
       path: '/HPCalculator'
@@ -56,36 +69,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/ACValidator': typeof ACValidatorLazyRoute
   '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/ACValidator': typeof ACValidatorLazyRoute
   '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/ACValidator': typeof ACValidatorLazyRoute
   '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/HPCalculator'
+  fullPaths: '/' | '/ACValidator' | '/HPCalculator'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/HPCalculator'
-  id: '__root__' | '/' | '/HPCalculator'
+  to: '/' | '/ACValidator' | '/HPCalculator'
+  id: '__root__' | '/' | '/ACValidator' | '/HPCalculator'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  ACValidatorLazyRoute: typeof ACValidatorLazyRoute
   HPCalculatorLazyRoute: typeof HPCalculatorLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  ACValidatorLazyRoute: ACValidatorLazyRoute,
   HPCalculatorLazyRoute: HPCalculatorLazyRoute,
 }
 
@@ -102,11 +120,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/ACValidator",
         "/HPCalculator"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/ACValidator": {
+      "filePath": "ACValidator.lazy.tsx"
     },
     "/HPCalculator": {
       "filePath": "HPCalculator.lazy.tsx"
