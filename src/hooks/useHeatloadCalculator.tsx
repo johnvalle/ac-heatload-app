@@ -2,10 +2,9 @@ import { useCallback, useReducer, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { Range } from "@/constants/HorsepowerRange"
 import { calculatorReducer } from "@/reducers/calculatorReducer"
 import { HeatloadFactors } from "@/types/heatload"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Range } from "@/constants/HorsepowerRange"
 import {
   getAreaHeatLoad,
   getBulbHeatload,
@@ -13,6 +12,7 @@ import {
   getPeopleHeatLoad,
   getWindowHeatLoad,
 } from "@/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const formSchema = z.object({
   name: z.string().min(2, {

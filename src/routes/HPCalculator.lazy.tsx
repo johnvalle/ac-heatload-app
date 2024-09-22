@@ -1,20 +1,18 @@
+import { useCallback, useState } from "react"
 import { createLazyFileRoute } from "@tanstack/react-router"
 
-import plugSvg from "@/assets/plug.svg"
 import lightningSvg from "@/assets/conflict.svg"
-
-import { BaseLayout } from "@/layouts/BaseLayout"
-import { Container } from "@/layouts/Container"
-import { Banner } from "@/layouts/Banner"
-import { Form } from "@/components/ui/form"
-
-import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
-import { Button } from "@/components/ui/button"
-import { useCallback, useState } from "react"
-import { Modal } from "@/components/custom/Modal"
+import plugSvg from "@/assets/plug.svg"
 import { ACCalculator } from "@/components/custom/ACCalculator"
 import { HeatloadCard } from "@/components/custom/HeatloadCard"
+import { Modal } from "@/components/custom/Modal"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
+import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
+import { Banner } from "@/layouts/Banner"
+import { BaseLayout } from "@/layouts/BaseLayout"
+import { Container } from "@/layouts/Container"
 
 export const Route = createLazyFileRoute("/HPCalculator")({
   component: HPCalculator,
@@ -68,28 +66,6 @@ function HPCalculator() {
                       isSuccess
                     />
                     <Separator />
-                    <p className="text-custom-black text-xs">
-                      We recommend this because there are usually{" "}
-                      <span className="font-bold">
-                        {data.personCount} people
-                      </span>{" "}
-                      in the room
-                      {!!data.heatItems.length && " with "}
-                      {!!data.heatItems.length && (
-                        <span className="font-bold">
-                          {data.heatItems.join(", ")}
-                        </span>
-                      )}
-                      {data.windowCount > 0 && (
-                        <span className="font-bold">
-                          {`, ${data.windowCount} windows, `}
-                        </span>
-                      )}
-                      {data.bulbCount > 0 && (
-                        <span className="font-bold">{`${data.bulbCount} bulb${data.bulbCount > 1 ? "s" : ""}`}</span>
-                      )}
-                      {data.hasDirectSunlight && ", hit by direct sunlight"}.
-                    </p>
                   </>
                 }
                 footer={
