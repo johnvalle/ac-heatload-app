@@ -2,11 +2,17 @@ import { useCallback, useReducer, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { ItemsHeatLoadMap } from "@/constants/HeatItems"
 import { calculatorReducer } from "@/reducers/calculatorReducer"
-import { HeatItems, HeatloadFactors } from "@/types/heatload"
+import { HeatloadFactors } from "@/types/heatload"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Range } from "@/constants/HorsepowerRange"
+import {
+  getAreaHeatLoad,
+  getBulbHeatload,
+  getHeatItemsHeatload,
+  getPeopleHeatLoad,
+  getWindowHeatLoad,
+} from "@/utils"
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -41,22 +47,33 @@ export const useHeatloadCalculator = () => {
     },
   })
 
+  /** Compute heatload on submit */
   const onSubmit = useCallback(
     (values: z.infer<typeof formSchema>) => {
       const heatItems = getHeatItemsHeatload(state.heatItems)
-      const bulbs = state.bulbCount * 36
-      const windows = state.windowCount * 600
-      const sunlight = state.hasDirectSunlight ? 50 : 0
-      const person = state.personCount * 600
-      const area = values.area * (state.unitType === "residential" ? 600 : 800)
-      form.reset({}, { keepValues: true })
-      const total = heatItems + bulbs + windows + sunlight + person + area
+      const bulbs = getBulbHeatload(state.bulbCount)
+      const windows = getWindowHeatLoad(
+        state.bulbCount,
+        state.hasDirectSunlight
+      )
+      const person = getPeopleHeatLoad(state.personCount)
+      const area = getAreaHeatLoad(values.area, state.unitType)
 
-      setComputedHeatload(total)
+      const sum = [heatItems, bulbs, windows, person, area].reduce(
+        (partialSum, value) => (partialSum += value),
+        0
+      )
+
+      setComputedHeatload(sum)
     },
     [state]
   )
 
+  /**
+   * Based on range of values,
+   * check if heatload is within range.
+   * If not, increase hp by 0.5.
+   */
   const computedHorsePower = Range.reduce((hp, curr) => {
     if (computedHeatload > curr) {
       return hp + 0.5
@@ -64,9 +81,6 @@ export const useHeatloadCalculator = () => {
       return hp
     }
   }, 1)
-
-  const getHeatItemsHeatload = (heatItems: HeatItems) =>
-    heatItems.reduce((total, key) => (total += ItemsHeatLoadMap[key]), 0)
 
   return {
     data: {

@@ -2,8 +2,8 @@ import { createLazyFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
 import { Form } from "@/components/ui/form"
 
-import rulerSvg from "@assets/ruler.svg"
-import checkSvg from "@assets/check.svg"
+import rulerSvg from "@/assets/ruler.svg"
+import checkSvg from "@/assets/check.svg"
 
 import { ACCalculator } from "@/components/custom/ACCalculator"
 import { Modal } from "@/components/custom/Modal"

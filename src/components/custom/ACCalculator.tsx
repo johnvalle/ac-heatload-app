@@ -1,6 +1,6 @@
-import roomSvg from "@assets/room.svg"
-import peopleSvg from "@assets/people.svg"
-import bulbSvg from "@assets/idea.svg"
+import roomSvg from "@/assets/room.svg"
+import peopleSvg from "@/assets/people.svg"
+import bulbSvg from "@/assets/idea.svg"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"

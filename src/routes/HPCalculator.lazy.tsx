@@ -1,9 +1,9 @@
 import { createLazyFileRoute } from "@tanstack/react-router"
 
-import plugSvg from "@assets/plug.svg"
-import lightningSvg from "@assets/conflict.svg"
+import plugSvg from "@/assets/plug.svg"
+import lightningSvg from "@/assets/conflict.svg"
 
-import { BaseLayout } from "@layouts/BaseLayout"
+import { BaseLayout } from "@/layouts/BaseLayout"
 import { Container } from "@/layouts/Container"
 import { Banner } from "@/layouts/Banner"
 import { Form } from "@/components/ui/form"

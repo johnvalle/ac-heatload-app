@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
 import userEvent from "@testing-library/user-event"
 import { HeatItemCounter } from "@/components/custom/HeatItemCounter"
-import peopleSvg from "@assets/people.svg"
+import peopleSvg from "@/assets/people.svg"
 
 describe("Heat item counter component", () => {
   const renderComponent = () =>

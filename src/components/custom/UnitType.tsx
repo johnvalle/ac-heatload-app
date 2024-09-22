@@ -1,5 +1,5 @@
-import residentialSvg from "@assets/home.svg"
-import commercialSvg from "@assets/company.svg"
+import residentialSvg from "@/assets/home.svg"
+import commercialSvg from "@/assets/company.svg"
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 import { UnitType } from "@/types/heatload"
