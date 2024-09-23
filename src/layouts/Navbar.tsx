@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router"
 
 const Navbar = () => {
   return (
-    <div>
-      <div className="p-2 flex gap-6 h-[72px] px-12 py-4 border-y border-y-custom-gray-stroke">
+    <div className="mx-auto max-w-[1000px] bg-white">
+      <div className="p-2 flex gap-6 h-[72px] px-8 py-4 border-y border-y-custom-gray-stroke">
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}

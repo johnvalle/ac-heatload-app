@@ -1,4 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router"
+
 import plugSvg from "@/assets/plug.svg"
 import rulerSvg from "@/assets/ruler.svg"
 import { BaseLayout } from "@/layouts/BaseLayout"
@@ -12,7 +13,7 @@ function Home() {
   return (
     <BaseLayout>
       <Container>
-        <div className="text-start">
+        <div className="text-start pt-10">
           <h2 className="font-bold text-2xl text-custom-black">
             Let's get started
           </h2>
@@ -21,7 +22,7 @@ function Home() {
           </h3>
         </div>
         <div className="flex gap-11 py-12">
-          <div className="flex relative bg-custom-blue-light w-[240px] h-[285px] p-9 rounded-[36px]">
+          <div className="flex relative bg-custom-blue-light w-[240px] h-[285px] p-9 rounded-[36px] cursor-pointer hover:-translate-y-2 ease-linear duration-100">
             <img
               className="absolute -top-8 left-4"
               src={plugSvg}
@@ -32,7 +33,7 @@ function Home() {
               How much HP for my room?
             </p>
           </div>
-          <div className="flex relative bg-custom-green-light w-[240px] h-[285px] p-9 rounded-[36px]">
+          <div className="flex relative bg-custom-green-light w-[240px] h-[285px] p-9 rounded-[36px] cursor-pointer hover:-translate-y-2 ease-linear duration-100">
             <img
               className="absolute -top-8 left-4"
               src={rulerSvg}
