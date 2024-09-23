@@ -1,21 +1,22 @@
+import { ArrowRight } from "lucide-react"
+import { useCallback, useState } from "react"
 import { createLazyFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
-import { Form } from "@/components/ui/form"
 
-import rulerSvg from "@/assets/ruler.svg"
+import catSvg from "@/assets/cat.svg"
 import checkSvg from "@/assets/check.svg"
-
+import rulerSvg from "@/assets/ruler.svg"
 import { ACCalculator } from "@/components/custom/ACCalculator"
+import { HeatloadCard } from "@/components/custom/HeatloadCard"
 import { Modal } from "@/components/custom/Modal"
 import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { Slider } from "@/components/ui/slider"
 import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
 import { Banner } from "@/layouts/Banner"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { Container } from "@/layouts/Container"
-import { HeatloadCard } from "@/components/custom/HeatloadCard"
-import { Slider } from "@/components/ui/slider"
-import { Separator } from "@/components/ui/separator"
-import { Label } from "@/components/ui/label"
 
 export const Route = createLazyFileRoute("/ACValidator")({
   component: ACValidator,
@@ -24,8 +25,71 @@ export const Route = createLazyFileRoute("/ACValidator")({
 function ACValidator() {
   const [showModal, setShowModal] = useState(false)
   const [sliderValue, setSliderValue] = useState(0.5)
-  const { form, computedHeatload, data, onSubmit, dispatch } =
+  const { form, computedHorsePower, data, onSubmit, dispatch } =
     useHeatloadCalculator()
+
+  const isHpMatched = computedHorsePower === sliderValue
+
+  const handleCalculate = useCallback(() => {
+    setShowModal(form.formState.isValid)
+  }, [form.formState.isValid])
+
+  const matchedHpContent = () => {
+    return (
+      <>
+        <p className="font-bold text-2xl text-custom-black">Perfect!</p>
+        <p className="max-w-[240px]">
+          Your <span className="font-bold">{sliderValue}</span> HP
+          air-conditioner is perfect for your{" "}
+          <strong>{data.area} sq.m area</strong>,{" "}
+          <strong>{data.unitType}</strong> unit.
+        </p>
+      </>
+    )
+  }
+
+  const unmatchedHpContent = () => {
+    return (
+      <>
+        <p className="font-bold text-2xl text-custom-black">Uh oh...</p>
+        <p className="max-w-[240px]">
+          It seems like your current setup may not be the best setup.
+        </p>
+        <div className="border-t border-b border-custom-gray-stroke py-4 w-full flex flex-col justify-center items-center">
+          <div className="flex gap-4 items-center justify-center">
+            <HeatloadCard
+              hpLevel={sliderValue.toString()}
+              dir="col"
+              isSuccess={false}
+            />
+            <ArrowRight className="h-12 w-12" />
+            <HeatloadCard
+              hpLevel={computedHorsePower.toString()}
+              dir="col"
+              isSuccess
+            />
+          </div>
+        </div>
+        <div>
+          <p className="text-custom-black">
+            We suggest increasing your setup from
+          </p>
+          <p>
+            <span className="font-bold">{sliderValue.toString()} HP</span>
+            &nbsp;to&nbsp;
+            <span className="font-bold">{computedHorsePower} HP.</span>
+          </p>
+          <Button
+            variant="link"
+            className="underline"
+            onClick={() => setShowModal(false)}
+          >
+            See how we got this result
+          </Button>
+        </div>
+      </>
+    )
+  }
 
   return (
     <BaseLayout>
@@ -46,51 +110,17 @@ function ACValidator() {
                 showModal={showModal}
                 triggerButton={{
                   name: "Validate",
-                  onClick: () => setShowModal(form.formState.isValid),
+                  onClick: handleCalculate,
                 }}
                 handleClose={() => setShowModal(false)}
-                icon={<img src={checkSvg} alt="Check icon" />}
+                icon={
+                  <img
+                    src={isHpMatched ? checkSvg : catSvg}
+                    alt={isHpMatched ? "check icon" : "cat icon"}
+                  />
+                }
                 content={
-                  <>
-                    <p className="font-bold text-2xl text-custom-black">
-                      Awesome!
-                    </p>
-                    <p className="max-w-[240px]">
-                      Keep your <strong>{data.area} sq.m area</strong>,{" "}
-                      <strong>{data.unitType}</strong> type unit cool with a
-                    </p>
-                    <div className="border-t border-b border-custom-gray-stroke py-4 w-full flex flex-col justify-center items-center">
-                      <div className="w-[72px] h-[72px] text-[32px] p-4 rounded-full bg-custom-green-light flex items-center justify-center">
-                        <p className="text-custom-black font-bold">
-                          {Math.round(computedHeatload / 3165) / 2}
-                        </p>
-                      </div>
-                      <p className="font-bold">Horsepower</p>
-                      <p>Air-conditioner ({computedHeatload})</p>
-                    </div>
-                    <p className="text-custom-black text-xs">
-                      We recommend this because there are usually{" "}
-                      <span className="font-bold">
-                        {data.personCount} people
-                      </span>{" "}
-                      in the room
-                      {!!data.heatItems.length && " with "}
-                      {!!data.heatItems.length && (
-                        <span className="font-bold">
-                          {data.heatItems.join(", ")}
-                        </span>
-                      )}
-                      {data.windowCount > 0 && (
-                        <span className="font-bold">
-                          {`, ${data.windowCount} windows, `}
-                        </span>
-                      )}
-                      {data.bulbCount > 0 && (
-                        <span className="font-bold">{`${data.bulbCount} bulb${data.bulbCount > 1 ? "s" : ""}`}</span>
-                      )}
-                      {data.hasDirectSunlight && ", hit by direct sunlight"}.
-                    </p>
-                  </>
+                  isHpMatched ? matchedHpContent() : unmatchedHpContent()
                 }
                 footer={
                   <>
@@ -109,14 +139,17 @@ function ACValidator() {
             <Label>Input current AC Horsepower</Label>
             <div className="flex h-[72px]">
               <div className="w-auto">
-                <HeatloadCard dir="row" isSuccess={false} />
+                <HeatloadCard
+                  hpLevel={sliderValue.toString()}
+                  dir="row"
+                  isSuccess={false}
+                />
               </div>
               <Separator orientation="vertical" className="mx-4" />
               <Slider
-                tooltip={sliderValue.toString()}
                 className="w-[450px]"
                 defaultValue={[sliderValue]}
-                min={0}
+                min={0.5}
                 max={3}
                 step={0.5}
                 onValueChange={(value) => setSliderValue(value[0])}
