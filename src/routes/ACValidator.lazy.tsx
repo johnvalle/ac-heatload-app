@@ -5,7 +5,7 @@ import { createLazyFileRoute } from "@tanstack/react-router"
 import catSvg from "@/assets/cat.svg"
 import checkSvg from "@/assets/check.svg"
 import rulerSvg from "@/assets/ruler.svg"
-import { ACCalculator } from "@/components/custom/ACCalculator"
+import { Calculator } from "@/components/custom/Calculator"
 import { HeatloadCard } from "@/components/custom/HeatloadCard"
 import { Modal } from "@/components/custom/Modal"
 import { Button } from "@/components/ui/button"
@@ -155,7 +155,7 @@ function ACValidator() {
                 onValueChange={(value) => setSliderValue(value[0])}
               />
             </div>
-            <ACCalculator form={form} dispatch={dispatch} />
+            <Calculator form={form} dispatch={dispatch} />
           </Container>
         </form>
       </Form>

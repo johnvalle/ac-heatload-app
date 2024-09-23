@@ -3,7 +3,7 @@ import { createLazyFileRoute } from "@tanstack/react-router"
 
 import lightningSvg from "@/assets/conflict.svg"
 import plugSvg from "@/assets/plug.svg"
-import { ACCalculator } from "@/components/custom/ACCalculator"
+import { Calculator } from "@/components/custom/Calculator"
 import { HeatloadCard } from "@/components/custom/HeatloadCard"
 import { Modal } from "@/components/custom/Modal"
 import { Button } from "@/components/ui/button"
@@ -14,11 +14,11 @@ import { Banner } from "@/layouts/Banner"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { Container } from "@/layouts/Container"
 
-export const Route = createLazyFileRoute("/HPCalculator")({
-  component: HPCalculator,
+export const Route = createLazyFileRoute("/ACCalculator")({
+  component: ACCalculator,
 })
 
-function HPCalculator() {
+function ACCalculator() {
   const [showModal, setShowModal] = useState(false)
   const { form, computedHorsePower, data, onSubmit, dispatch } =
     useHeatloadCalculator()
@@ -82,7 +82,7 @@ function HPCalculator() {
             </div>
           </Banner>
           <Container className="py-8 pb-20">
-            <ACCalculator form={form} dispatch={dispatch} />
+            <Calculator form={form} dispatch={dispatch} />
           </Container>
         </form>
       </Form>

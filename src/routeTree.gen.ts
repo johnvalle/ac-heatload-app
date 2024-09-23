@@ -16,21 +16,21 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const HPCalculatorLazyImport = createFileRoute('/HPCalculator')()
 const ACValidatorLazyImport = createFileRoute('/ACValidator')()
+const ACCalculatorLazyImport = createFileRoute('/ACCalculator')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
-
-const HPCalculatorLazyRoute = HPCalculatorLazyImport.update({
-  path: '/HPCalculator',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/HPCalculator.lazy').then((d) => d.Route))
 
 const ACValidatorLazyRoute = ACValidatorLazyImport.update({
   path: '/ACValidator',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/ACValidator.lazy').then((d) => d.Route))
+
+const ACCalculatorLazyRoute = ACCalculatorLazyImport.update({
+  path: '/ACCalculator',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/ACCalculator.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -48,18 +48,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/ACCalculator': {
+      id: '/ACCalculator'
+      path: '/ACCalculator'
+      fullPath: '/ACCalculator'
+      preLoaderRoute: typeof ACCalculatorLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/ACValidator': {
       id: '/ACValidator'
       path: '/ACValidator'
       fullPath: '/ACValidator'
       preLoaderRoute: typeof ACValidatorLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/HPCalculator': {
-      id: '/HPCalculator'
-      path: '/HPCalculator'
-      fullPath: '/HPCalculator'
-      preLoaderRoute: typeof HPCalculatorLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -69,42 +69,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/ACCalculator': typeof ACCalculatorLazyRoute
   '/ACValidator': typeof ACValidatorLazyRoute
-  '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/ACCalculator': typeof ACCalculatorLazyRoute
   '/ACValidator': typeof ACValidatorLazyRoute
-  '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/ACCalculator': typeof ACCalculatorLazyRoute
   '/ACValidator': typeof ACValidatorLazyRoute
-  '/HPCalculator': typeof HPCalculatorLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ACValidator' | '/HPCalculator'
+  fullPaths: '/' | '/ACCalculator' | '/ACValidator'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ACValidator' | '/HPCalculator'
-  id: '__root__' | '/' | '/ACValidator' | '/HPCalculator'
+  to: '/' | '/ACCalculator' | '/ACValidator'
+  id: '__root__' | '/' | '/ACCalculator' | '/ACValidator'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  ACCalculatorLazyRoute: typeof ACCalculatorLazyRoute
   ACValidatorLazyRoute: typeof ACValidatorLazyRoute
-  HPCalculatorLazyRoute: typeof HPCalculatorLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  ACCalculatorLazyRoute: ACCalculatorLazyRoute,
   ACValidatorLazyRoute: ACValidatorLazyRoute,
-  HPCalculatorLazyRoute: HPCalculatorLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -120,18 +120,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/ACValidator",
-        "/HPCalculator"
+        "/ACCalculator",
+        "/ACValidator"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/ACCalculator": {
+      "filePath": "ACCalculator.lazy.tsx"
+    },
     "/ACValidator": {
       "filePath": "ACValidator.lazy.tsx"
-    },
-    "/HPCalculator": {
-      "filePath": "HPCalculator.lazy.tsx"
     }
   }
 }

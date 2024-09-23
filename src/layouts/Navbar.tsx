@@ -7,7 +7,7 @@ const Navbar = () => {
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}
-        <Link to="/HPCalculator" className="[&.active]:font-bold">
+        <Link to="/ACCalculator" className="[&.active]:font-bold">
           AC Calculator
         </Link>
         <Link to="/ACValidator" className="[&.active]:font-bold">

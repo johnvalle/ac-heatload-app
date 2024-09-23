@@ -1,13 +1,10 @@
-import roomSvg from "@/assets/room.svg"
-import peopleSvg from "@/assets/people.svg"
 import bulbSvg from "@/assets/idea.svg"
-
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { UnitTypeSelect } from "@/components/custom/UnitType"
-import { SunlightToggle } from "@/components/custom/SunlightToggle"
+import peopleSvg from "@/assets/people.svg"
+import roomSvg from "@/assets/room.svg"
 import { HeatComponentsSelector } from "@/components/custom/HeatComponents"
 import { HeatItemCounter } from "@/components/custom/HeatItemCounter"
+import { SunlightToggle } from "@/components/custom/SunlightToggle"
+import { UnitTypeSelect } from "@/components/custom/UnitType"
 import {
   FormControl,
   FormField,
@@ -15,6 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
 
 type CalculatorHookValue = ReturnType<typeof useHeatloadCalculator>
@@ -22,7 +21,7 @@ type Props = {
   form: CalculatorHookValue["form"]
   dispatch: CalculatorHookValue["dispatch"]
 }
-export const ACCalculator = ({ form, dispatch }: Props) => {
+export const Calculator = ({ form, dispatch }: Props) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
