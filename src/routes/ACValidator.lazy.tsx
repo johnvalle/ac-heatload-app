@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Slider } from "@/components/ui/slider"
 import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
+import { useStorage } from "@/hooks/useStorage"
 import { Banner } from "@/layouts/Banner"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { Container } from "@/layouts/Container"
@@ -25,14 +26,32 @@ export const Route = createLazyFileRoute("/ACValidator")({
 function ACValidator() {
   const [showModal, setShowModal] = useState(false)
   const [sliderValue, setSliderValue] = useState(0.5)
-  const { form, computedHorsePower, data, onSubmit, dispatch } =
-    useHeatloadCalculator()
+  const {
+    form,
+    computedHorsePower,
+    computedHeatload,
+    data,
+    onSubmit,
+    dispatch,
+  } = useHeatloadCalculator()
+
+  const { saveResult } = useStorage()
 
   const isHpMatched = computedHorsePower === sliderValue
 
   const handleCalculate = useCallback(() => {
     setShowModal(form.formState.isValid)
   }, [form.formState.isValid])
+
+  const saveData = () => {
+    saveResult("validations", {
+      computedHorsePower,
+      computedHeatload,
+      isHpMatched,
+      date: new Date().getTime(),
+      ...data,
+    })
+  }
 
   const matchedHpContent = () => {
     return (
@@ -124,7 +143,11 @@ function ACValidator() {
                 }
                 footer={
                   <>
-                    <Button type="submit" className="align-center rounded-full">
+                    <Button
+                      type="submit"
+                      className="align-center rounded-full"
+                      onClick={saveData}
+                    >
                       Save calculation
                     </Button>
                     <Button variant="link" onClick={() => setShowModal(false)}>

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
 import { useHeatloadCalculator } from "@/hooks/useHeatloadCalculator"
+import { useStorage } from "@/hooks/useStorage"
 import { Banner } from "@/layouts/Banner"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { Container } from "@/layouts/Container"
@@ -20,12 +21,29 @@ export const Route = createLazyFileRoute("/ACCalculator")({
 
 function ACCalculator() {
   const [showModal, setShowModal] = useState(false)
-  const { form, computedHorsePower, data, onSubmit, dispatch } =
-    useHeatloadCalculator()
+  const {
+    form,
+    computedHorsePower,
+    computedHeatload,
+    data,
+    onSubmit,
+    dispatch,
+  } = useHeatloadCalculator()
+
+  const { saveResult } = useStorage()
 
   const handleCalculate = useCallback(() => {
     setShowModal(form.formState.isValid)
   }, [form.formState.isValid])
+
+  const saveData = () => {
+    saveResult("calculations", {
+      computedHorsePower,
+      computedHeatload,
+      date: new Date().getTime(),
+      ...data,
+    })
+  }
 
   return (
     <BaseLayout>
@@ -70,7 +88,11 @@ function ACCalculator() {
                 }
                 footer={
                   <>
-                    <Button type="submit" className="align-center rounded-full">
+                    <Button
+                      type="submit"
+                      className="align-center rounded-full"
+                      onClick={saveData}
+                    >
                       Save calculation
                     </Button>
                     <Button variant="link" onClick={() => setShowModal(false)}>
